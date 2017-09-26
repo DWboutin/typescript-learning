@@ -1,6 +1,16 @@
 import HttpRequestService from './src/Services/HttpRequestService';
+import CacheSystemService from './src/Services/CacheSystemService';
+import RedisCacheFactory from './src/Factories/RedisCacheFactory';
 
 (function() {
+    const redisDB = new RedisCacheFactory().create({
+        host: '',
+        port: null,
+        password: '',
+        ttl: 60 * 60 * 24 * 15, // 15 jours
+    });
+    const cacheSystem = new CacheSystemService(redisDB);
+
     function get() {
         const httpRequestService = new HttpRequestService();
 

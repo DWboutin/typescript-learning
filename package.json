@@ -5,16 +5,25 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run build:live",
-    "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./index.ts"
+    "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./index",
+    "compile": "tsc",
+    "test": "./node_modules/.bin/mocha --compilers ts:ts-node/register ./test/**/*.ts"
   },
   "dependencies": {
+    "ioredis": "^3.1.1",
     "superagent": "^3.6.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.0.4",
     "@types/es6-shim": "^0.31.35",
+    "@types/ioredis": "^0.0.25",
+    "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.31",
     "@types/superagent": "^3.5.5",
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3",
     "nodemon": "^1.12.1",
+    "sinon": "^4.0.0",
     "ts-node": "^3.3.0",
     "typescript": "^2.5.2"
   }
