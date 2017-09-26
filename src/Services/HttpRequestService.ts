@@ -1,4 +1,3 @@
-import * as request from 'superagent';
 import HttpRequestInterface from '../Interfaces/HttpRequestInterface';
 import { SuperAgentStatic, SuperAgentRequest } from "superagent";
 
@@ -11,7 +10,7 @@ class HttpRequestService implements HttpRequestInterface{
     }
 
     get(url: string): HttpRequestService {
-        this.currentReq = request.get(url);
+        this.currentReq = this.engine.get(url);
         return this;
     }
 
