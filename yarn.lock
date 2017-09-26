@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@types/es6-shim@^0.31.35":
+  version "0.31.35"
+  resolved "https://registry.yarnpkg.com/@types/es6-shim/-/es6-shim-0.31.35.tgz#d11920d8d4c938ad912c51e699ed7ba2505ba1eb"
+
 "@types/node@*", "@types/node@^8.0.31":
   version "8.0.31"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.31.tgz#d9af61093cf4bfc9f066ca34de0175012cfb0ce9"

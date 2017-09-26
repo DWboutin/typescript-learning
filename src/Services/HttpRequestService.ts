@@ -1,21 +1,44 @@
 import HttpRequestInterface from '../Interfaces/HttpRequestInterface';
-import { SuperAgentStatic, SuperAgentRequest } from "superagent";
+import * as request from 'superagent';
+import {Response, ResponseError, SuperAgentStatic} from "superagent";
+
+declare var Promise: any;
 
 class HttpRequestService implements HttpRequestInterface{
     private engine: SuperAgentStatic;
-    private currentReq: SuperAgentRequest;
 
-    constructor(engine: SuperAgentStatic) {
-        this.engine = engine;
+    constructor() {
+        this.engine = request; // Superagent
     }
 
-    get(url: string): HttpRequestService {
-        this.currentReq = this.engine.get(url);
-        return this;
+    get({ url, query }: { url: string, query?: any }): Promise<any>{
+        return new Promise((fulfill: any, reject: any) => {
+            this.engine
+                .get(url)
+                .query(query)
+                .end((err: ResponseError, res: Response) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    fulfill(res);
+                });
+        });
     }
 
-    end(cb: (err: any, res: any) => any) {
-        return this.currentReq.end(cb);
+    post({ url, send }: { url: string, send?: any }): Promise<any>{
+        return new Promise((fulfill: any, reject: any) => {
+            this.engine
+                .post(url)
+                .send(send)
+                .end((err: ResponseError, res: Response) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    fulfill(res);
+                });
+        });
     }
 };
 

@@ -1,6 +1,4 @@
-import { Response, ResponseError } from 'superagent';
-
 export default interface HttpRequestInterface {
-    get: (url: string) => HttpRequestService;
-    end: (cb: (err: Response, res: ResponseError) => any) => any;
+    get: ({ url, query }: { url: string, query?: any }) => Promise<any>;
+    post: ({ url, send }: { url: string, send?: any }) => Promise<any>;
 };

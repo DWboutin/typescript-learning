@@ -11,6 +11,7 @@
     "superagent": "^3.6.0"
   },
   "devDependencies": {
+    "@types/es6-shim": "^0.31.35",
     "@types/node": "^8.0.31",
     "@types/superagent": "^3.5.5",
     "nodemon": "^1.12.1",
