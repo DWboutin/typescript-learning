@@ -1,0 +1,20 @@
+{
+  "name": "typescript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run build:live",
+    "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./index.ts"
+  },
+  "dependencies": {
+    "superagent": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.31",
+    "@types/superagent": "^3.5.5",
+    "nodemon": "^1.12.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.2"
+  }
+}
