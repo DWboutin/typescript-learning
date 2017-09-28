@@ -4,14 +4,23 @@
     "module": "commonjs",
     //"sourceMap": true,
     "strict": true,
-    "types": ["node", "superagent", "es6-promise", "ioredis", "mocha", "chai"],
+    "noImplicitAny": false,
+    "types": ["node", "superagent", "es6-promise", "ioredis", "mocha", "chai", "express", "graphql", "express-graphql", "body-parser"],
     "typeRoots": [
       "./node_modules/@types"
+    ],
+    "lib": [
+      "dom",
+      "es5",
+      "esnext.asynciterable"
     ]
   },
   "files": [
     "./index.ts"
   ],
   "include": ["src/*"],
-  "exclude": ["node_modules/*", "test/*"]
+  "exclude": [
+    "node_modules/*",
+    "test/*"
+  ]
 }

@@ -1,48 +1,29 @@
-import HttpRequestService from './src/Services/HttpRequestService';
-import CacheSystemService from './src/Services/CacheSystemService';
-import RedisCacheFactory from './src/Factories/RedisCacheFactory';
+import * as express from 'express';
+import * as graphql from 'graphql';
+import * as graphQLHTTP from 'express-graphql';
 
-(function() {
-    const redisDB = new RedisCacheFactory().create({
-        host: '',
-        port: null,
-        password: '',
-        ttl: 60 * 60 * 24 * 15, // 15 jours
-    });
-    const cacheSystem = new CacheSystemService(redisDB);
+import * as bodyParser from 'body-parser';
 
-    function get() {
-        const httpRequestService = new HttpRequestService();
+import schema from './src/Schema/index';
 
-        httpRequestService
-            .get({
-                url: 'https://jsonplaceholder.typicode.com/posts/1'
-            })
-            .then((res): void => {
-                console.log(res.body);
-            }).catch((err): void => {
-                console.log(err);
-            });
-    }
+const app = express();
+const PORT = 1234;
 
-    function post() {
-        const httpRequestService = new HttpRequestService();
+app.use(bodyParser.text({ type: 'application/graphql' }));
 
-        httpRequestService
-            .post({
-                url: 'https://jsonplaceholder.typicode.com/posts',
-                send: {
-                    title: '1234',
-                    text: 'Lipsum blabla'
-                }
-            })
-            .then((res): void => {
-                console.log(res.body);
-            }).catch((err): void => {
-                console.log(err.status);
-            });
-    }
+app.use('/graphql', graphQLHTTP(() => ({
+    schema,
+    graphiql: true,
+    formatError: error => {
+        return {
+            message: error.message,
+            locations: error.locations,
+            stack: error.stack,
+            path: error.path
+        };
+    },
+})));
 
-    get();
-    post();
-})();
+app.listen(PORT, function () {
+    console.log('Server listening to port ' + PORT);
+});

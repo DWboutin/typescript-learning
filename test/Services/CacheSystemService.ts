@@ -10,7 +10,7 @@ const should = chai.should();
 
 const redisConfigs = {
     host: '',
-    port: ,
+    port: 0000,
     password: '',
     ttl: 60 * 60 * 24 * 15, // 15 jours
 };
