@@ -11,11 +11,10 @@ export default class GuardAgainstNullProperties {
         this.customExceptionMessage = customExceptionMessage;
     }
 
-    guard() {
-        console.log(this.fields);
+    public guard() {
         this.fields.forEach((field) => {
             if (this.obj[field] === null || typeof this.obj[field] === 'undefined') {
-                throw new PropertiesAreNullException(this.fields, this.customExceptionMessage);
+                throw new PropertiesAreNullException(this.fields);
             }
         });
     }

@@ -9,22 +9,16 @@ class CacheSystemService implements CacheSystemInterface{
         this.cacheSystem = cacheFactory;
     }
 
-    exists(): Promise<any> {
-        return new Promise((fulfill: any) => {
-            fulfill();
-        });
+    exists(key: string): Promise<any> {
+        return this.cacheSystem.exists(key);
     }
 
-    set(): Promise<any> {
-        return new Promise((fulfill: any) => {
-            fulfill();
-        });
+    set(key: string, ttl: number, content: any): Promise<any> {
+        return this.cacheSystem.setex(key, ttl, content);
     }
 
-    get(): Promise<any> {
-        return new Promise((fulfill: any) => {
-            fulfill();
-        });
+    get(key: string): Promise<any> {
+        return this.cacheSystem.get(key);
     }
 
     flushall(): Promise<any> {

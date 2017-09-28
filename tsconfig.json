@@ -4,7 +4,10 @@
     "module": "commonjs",
     //"sourceMap": true,
     "strict": true,
-    "types": ["node", "superagent", "es6-promise", "ioredis"]
+    "types": ["node", "superagent", "es6-promise", "ioredis", "mocha", "chai"],
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
   },
   "files": [
     "./index.ts"

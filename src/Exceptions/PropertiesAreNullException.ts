@@ -7,7 +7,7 @@ export default class PropertiesAreNullException extends Error {
     constructor(fields: Array<string>, message?: string) {
 
         if(typeof message == 'undefined') {
-            message = `You need to provide properties (${fields.join(', ')}) who can't be null or undefined.`;
+            message = `You need to provide an object with these properties (${fields.join(', ')}) who can't be null or undefined.`;
         }
 
         super(message);
