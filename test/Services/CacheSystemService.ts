@@ -1,6 +1,8 @@
 import "mocha";
 import * as chai from 'chai';
 
+declare var Promise: any;
+
 import CacheSystemService from '../../src/Services/CacheSystemService';
 import RedisCacheFactory from '../../src/Factories/RedisCacheFactory';
 
@@ -45,6 +47,50 @@ describe("CacheSystemService", () => {
 
             cacheService.get('testCache').then((res: string) => {
                 res.should.equal('test content');
+                done();
+            });
+        });
+    });
+
+    describe("delete method", () => {
+        it('it should get delete the key named "testCache"', (done) => {
+            const redisDB = new RedisCacheFactory().create(redisConfigs);
+            const cacheService = new CacheSystemService(redisDB);
+
+            cacheService.delete('testCache').then((res: string) => {
+                res.should.equal(1);
+                done();
+            });
+        });
+    });
+
+    describe("flushall method", () => {
+        it('it should create 3 keys with content and flush all of them', (done) => {
+            const redisDB = new RedisCacheFactory().create(redisConfigs);
+            const cacheService = new CacheSystemService(redisDB);
+            const cacheKeysValues: any = {
+              key1: 'value1',
+              key2: 'value2',
+              key3: 'value3',
+            };
+            const promiseArray: Array<Promise<any>> = [];
+
+            Object.keys(cacheKeysValues).forEach((key: string) => {
+                promiseArray.push(cacheService.set(key, 1234, cacheKeysValues[key]));
+            });
+
+            Promise.all(promiseArray).then(() => {
+                return cacheService.flushall();
+            }).then(() => {
+                const existPromisesArray: Array<Promise<any>> = [];
+
+                Object.keys(cacheKeysValues).forEach((key: string) => {
+                    existPromisesArray.push(cacheService.exists(key));
+                });
+
+                return Promise.all(existPromisesArray);
+            }).then((res: any) => {
+                res.should.be.an('array').to.not.include(1);
                 done();
             });
         });

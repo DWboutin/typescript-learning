@@ -22,17 +22,12 @@ class CacheSystemService implements CacheSystemInterface{
     }
 
     flushall(): Promise<any> {
-        return new Promise((fulfill: any) => {
-            fulfill();
-        });
+        return this.cacheSystem.flushall();
     }
 
-    delete(): Promise<any> {
-        return new Promise((fulfill: any) => {
-            fulfill();
-        });
+    delete(key: string): Promise<any> {
+        return this.cacheSystem.del(key);
     }
-
 }
 
 export default CacheSystemService;
