@@ -7,9 +7,9 @@ import RedisCacheFactory from '../../src/Factories/RedisCacheFactory';
 const should = chai.should();
 
 const redisConfigs = {
-    host: 'vm1.mboutin2.dev.lan',
-    port: 6379,
-    password: 'foobarbaz',
+    host: '',
+    port: ,
+    password: '',
     ttl: 60 * 60 * 24 * 15, // 15 jours
 };
 

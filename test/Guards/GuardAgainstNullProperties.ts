@@ -29,7 +29,7 @@ describe("GuardAgainstNullProperties", () => {
         const obj = {
             prop1: 'test',
             prop2: 'test2',
-            prop3: '',
+            prop3: null,
         };
         const functionThatThrows = () => {
             (new GuardAgainstNullProperties(['prop1', 'prop2', 'prop3'], obj)).guard()
