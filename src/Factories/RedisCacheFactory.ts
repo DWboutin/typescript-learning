@@ -3,7 +3,7 @@ import GuardAgainstNullProperties from '../Guards/GuardAgainstNullProperties';
 
 export default class RedisCacheFactory {
     create(config: any): any {
-        (new GuardAgainstNullProperties(['host', 'port', 'password'], config)).guard();
+        (new GuardAgainstNullProperties()).guard(config, ['host', 'port', 'password']);
 
         const redis = new Redis({
             host: config.host,

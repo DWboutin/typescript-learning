@@ -10,7 +10,7 @@ const should = chai.should();
 
 const redisConfigs = {
     host: '',
-    port: 0000,
+    port: 1234,
     password: '',
     ttl: 60 * 60 * 24 * 15, // 15 jours
 };
@@ -59,6 +59,40 @@ describe("CacheSystemService", () => {
 
             cacheService.delete('testCache').then((res: string) => {
                 res.should.equal(1);
+                done();
+            });
+        });
+    });
+
+    describe("retrieve method", () => {
+        it('it should get the key named "testCache" but got none and run the promise', (done) => {
+            const redisDB = new RedisCacheFactory().create(redisConfigs);
+            const cacheService = new CacheSystemService(redisDB);
+            const testPromise = (): Promise<any> => new Promise((fulfill: any) => {
+                setTimeout(() => {
+                    fulfill('promise done');
+                }, 500);
+            });
+
+            cacheService.retrieve('testCache', testPromise).then((res: string) => {
+                res.should.equal('promise done');
+                done();
+            });
+        });
+
+        it('it should get the newly created key named "testCache"', (done) => {
+            const redisDB = new RedisCacheFactory().create(redisConfigs);
+            const cacheService = new CacheSystemService(redisDB);
+            const testPromise = (): Promise<any> => new Promise((fulfill: any) => {
+                setTimeout(() => {
+                    fulfill('promise done');
+                }, 500);
+            });
+
+            cacheService.set('testCache', 1000, 'cached key saved').then(() => {
+                return cacheService.retrieve('testCache', testPromise);
+            }).then((res: string) => {
+                res.should.equal('cached key saved');
                 done();
             });
         });

@@ -28,6 +28,16 @@ class CacheSystemService implements CacheSystemInterface{
     delete(key: string): Promise<any> {
         return this.cacheSystem.del(key);
     }
+
+    retrieve(key: string, promise: any): Promise<any> {
+        return this.exists(key).then((res) => {
+            if (res === 1) {
+                return this.get(key);
+            }
+
+            return promise();
+        });
+    }
 }
 
 export default CacheSystemService;
