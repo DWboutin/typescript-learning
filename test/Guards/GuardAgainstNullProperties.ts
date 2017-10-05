@@ -2,7 +2,6 @@ import 'mocha';
 import * as chai from 'chai';
 
 import GuardAgainstNullProperties from '../../src/Guards/GuardAgainstNullProperties';
-import PropertiesAreNullException from '../../src/Exceptions/PropertiesAreNullException';
 
 const { expect, assert } = chai;
 
@@ -18,7 +17,7 @@ describe("GuardAgainstNullProperties", () => {
         };
 
         const functionThatThrows = () => {
-            (new GuardAgainstNullProperties()).guard(obj, ['prop1', 'prop2', 'prop3'])
+            (new GuardAgainstNullProperties()).guard(obj, ['prop1', 'prop2', 'prop3']);
         };
 
         expect(functionThatThrows).to.not.throw();
@@ -32,7 +31,7 @@ describe("GuardAgainstNullProperties", () => {
             prop3: null,
         };
         const functionThatThrows = () => {
-            (new GuardAgainstNullProperties()).guard(obj, ['prop1', 'prop2', 'prop3'])
+            (new GuardAgainstNullProperties()).guard(obj, ['prop1', 'prop2', 'prop3']);
         };
 
         expect(functionThatThrows).to.throw().that.satisfies((error: any) => {
@@ -45,7 +44,7 @@ describe("GuardAgainstNullProperties", () => {
         const obj = ['test', 'test2', 'test3'];
 
         const functionThatThrows = () => {
-            (new GuardAgainstNullProperties()).guard(obj, ['prop1', 'prop2', 'prop3'])
+            (new GuardAgainstNullProperties()).guard(obj, ['prop1', 'prop2', 'prop3']);
         };
 
         expect(functionThatThrows).to.throw().that.satisfies((error: any) => {
@@ -58,7 +57,7 @@ describe("GuardAgainstNullProperties", () => {
         const obj = 'test';
 
         const functionThatThrows = () => {
-            (new GuardAgainstNullProperties()).guard(obj, ['prop1', 'prop2', 'prop3'])
+            (new GuardAgainstNullProperties()).guard(obj, ['prop1', 'prop2', 'prop3']);
         };
 
         expect(functionThatThrows).to.throw().that.satisfies((error: any) => {
@@ -71,7 +70,7 @@ describe("GuardAgainstNullProperties", () => {
         const obj = 1234;
 
         const functionThatThrows = () => {
-            (new GuardAgainstNullProperties()).guard(obj, ['prop1', 'prop2', 'prop3'])
+            (new GuardAgainstNullProperties()).guard(obj, ['prop1', 'prop2', 'prop3']);
         };
 
         expect(functionThatThrows).to.throw().that.satisfies((error: any) => {

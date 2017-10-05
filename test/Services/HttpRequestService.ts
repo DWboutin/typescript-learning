@@ -1,6 +1,7 @@
 import "mocha";
 import * as chai from 'chai';
 
+import SuperagentClient from '../../src/Clients/SuperagentClient';
 import HttpRequestService from '../../src/Services/HttpRequestService';
 
 const should = chai.should();
@@ -8,7 +9,8 @@ const should = chai.should();
 describe("HttpRequestService", () => {
     describe("GET method", () => {
         it('it should GET the post json', (done) => {
-            const httpRequestService = new HttpRequestService();
+            const superagentClient = new SuperagentClient();
+            const httpRequestService = new HttpRequestService(superagentClient);
 
             httpRequestService
                 .get({
@@ -24,7 +26,8 @@ describe("HttpRequestService", () => {
         });
 
         it('it should not GET the post with wrong url and get status 404', (done) => {
-            const httpRequestService = new HttpRequestService();
+            const superagentClient = new SuperagentClient();
+            const httpRequestService = new HttpRequestService(superagentClient);
 
             httpRequestService
                 .get({
@@ -42,7 +45,8 @@ describe("HttpRequestService", () => {
 
     describe("POST method", () => {
         it('it should POST a post and get an object with id, title, text back', (done) => {
-            const httpRequestService = new HttpRequestService();
+            const superagentClient = new SuperagentClient();
+            const httpRequestService = new HttpRequestService(superagentClient);
 
             httpRequestService
                 .post({
@@ -68,7 +72,8 @@ describe("HttpRequestService", () => {
         });
 
         it('it should POST a post to a wrong url and get status 404', (done) => {
-            const httpRequestService = new HttpRequestService();
+            const superagentClient = new SuperagentClient();
+            const httpRequestService = new HttpRequestService(superagentClient);
 
             httpRequestService
                 .post({

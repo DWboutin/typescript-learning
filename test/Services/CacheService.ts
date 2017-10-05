@@ -3,23 +3,26 @@ import * as chai from 'chai';
 
 declare var Promise: any;
 
-import CacheSystemService from '../../src/Services/CacheSystemService';
-import RedisCacheFactory from '../../src/Factories/RedisCacheFactory';
+import RedisClient from '../../src/Clients/RedisClient';
+import CacheService from '../../src/Services/CacheService';
+
+import ValueToJsonTransformer from '../../src/Transformers/ValueToJsonTransformer';
+import JsonParseValueTransformer from '../../src/Transformers/JsonParseValueTransformer';
 
 const should = chai.should();
 
 const redisConfigs = {
-    host: '',
-    port: 1234,
-    password: '',
+    host: ,
+    port: ,
+    password: ,
     ttl: 60 * 60 * 24 * 15, // 15 jours
 };
 
-describe("CacheSystemService", () => {
+describe("CacheService", () => {
     describe("set method", () => {
         it('it should set a key named "testCache"', (done) => {
-            const redisDB = new RedisCacheFactory().create(redisConfigs);
-            const cacheService = new CacheSystemService(redisDB);
+            const redisClient = new RedisClient(redisConfigs);
+            const cacheService = new CacheService(redisClient);
 
             cacheService.set('testCache', 1000, 'test content').then((res: string) => {
                 res.should.equal('OK');
@@ -30,8 +33,8 @@ describe("CacheSystemService", () => {
 
     describe("exists method", () => {
         it('it should check if a key named "testCache" exists', (done) => {
-            const redisDB = new RedisCacheFactory().create(redisConfigs);
-            const cacheService = new CacheSystemService(redisDB);
+            const redisClient = new RedisClient(redisConfigs);
+            const cacheService = new CacheService(redisClient);
 
             cacheService.exists('testCache').then((res: string) => {
                 res.should.equal(1);
@@ -42,8 +45,8 @@ describe("CacheSystemService", () => {
 
     describe("get method", () => {
         it('it should get a key named "testCache"', (done) => {
-            const redisDB = new RedisCacheFactory().create(redisConfigs);
-            const cacheService = new CacheSystemService(redisDB);
+            const redisClient = new RedisClient(redisConfigs);
+            const cacheService = new CacheService(redisClient);
 
             cacheService.get('testCache').then((res: string) => {
                 res.should.equal('test content');
@@ -54,8 +57,8 @@ describe("CacheSystemService", () => {
 
     describe("delete method", () => {
         it('it should get delete the key named "testCache"', (done) => {
-            const redisDB = new RedisCacheFactory().create(redisConfigs);
-            const cacheService = new CacheSystemService(redisDB);
+            const redisClient = new RedisClient(redisConfigs);
+            const cacheService = new CacheService(redisClient);
 
             cacheService.delete('testCache').then((res: string) => {
                 res.should.equal(1);
@@ -66,23 +69,23 @@ describe("CacheSystemService", () => {
 
     describe("retrieve method", () => {
         it('it should get the key named "testCache" but got none and run the promise', (done) => {
-            const redisDB = new RedisCacheFactory().create(redisConfigs);
-            const cacheService = new CacheSystemService(redisDB);
+            const redisClient = new RedisClient(redisConfigs);
+            const cacheService = new CacheService(redisClient);
             const testPromise = (): Promise<any> => new Promise((fulfill: any) => {
                 setTimeout(() => {
                     fulfill('promise done');
                 }, 500);
             });
 
-            cacheService.retrieve('testCache', testPromise).then((res: string) => {
+            cacheService.retrieve('testCache', 600, testPromise).then((res: string) => {
                 res.should.equal('promise done');
                 done();
             });
         });
 
         it('it should get the newly created key named "testCache"', (done) => {
-            const redisDB = new RedisCacheFactory().create(redisConfigs);
-            const cacheService = new CacheSystemService(redisDB);
+            const redisClient = new RedisClient(redisConfigs);
+            const cacheService = new CacheService(redisClient);
             const testPromise = (): Promise<any> => new Promise((fulfill: any) => {
                 setTimeout(() => {
                     fulfill('promise done');
@@ -90,7 +93,7 @@ describe("CacheSystemService", () => {
             });
 
             cacheService.set('testCache', 1000, 'cached key saved').then(() => {
-                return cacheService.retrieve('testCache', testPromise);
+                return cacheService.retrieve('testCache', 600, testPromise);
             }).then((res: string) => {
                 res.should.equal('cached key saved');
                 done();
@@ -100,8 +103,8 @@ describe("CacheSystemService", () => {
 
     describe("flushall method", () => {
         it('it should create 3 keys with content and flush all of them', (done) => {
-            const redisDB = new RedisCacheFactory().create(redisConfigs);
-            const cacheService = new CacheSystemService(redisDB);
+            const redisClient = new RedisClient(redisConfigs);
+            const cacheService = new CacheService(redisClient);
             const cacheKeysValues: any = {
               key1: 'value1',
               key2: 'value2',
